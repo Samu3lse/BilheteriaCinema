@@ -21,7 +21,7 @@ public class GeneroController {
         return generoService.getAll();
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public Genero getById(@PathVariable Long id) {
         return generoService.getById(id);
     }
@@ -31,7 +31,7 @@ public class GeneroController {
         return generoService.save(genero);
     }
 
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public Genero update(@PathVariable Long id, @RequestBody Genero genero) {
         return generoService.update(id, genero);
     }
