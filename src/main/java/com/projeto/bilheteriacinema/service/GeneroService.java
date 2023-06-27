@@ -1,5 +1,6 @@
 package com.projeto.bilheteriacinema.service;
 
+import com.projeto.bilheteriacinema.exception.RecursoNaoEncontradoException;
 import com.projeto.bilheteriacinema.model.entity.Genero;
 import com.projeto.bilheteriacinema.repository.GeneroRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class GeneroService {
         if (result.isPresent()){
             return result.get();
         }else {
-            throw new RuntimeException("Recurso não encontrado");
+            throw new RecursoNaoEncontradoException();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.projeto.bilheteriacinema.service;
 
+import com.projeto.bilheteriacinema.exception.RecursoNaoEncontradoException;
 import com.projeto.bilheteriacinema.model.entity.Filme;
 import com.projeto.bilheteriacinema.repository.FilmeRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class FilmeService {
         if(result.isPresent()){
             return result.get();
         }else{
-            throw new RuntimeException("Opção não encontrada");
+            throw new RecursoNaoEncontradoException();
         }
     }
 
