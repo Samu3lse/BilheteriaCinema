@@ -14,37 +14,40 @@ import java.util.Optional;
 public class GeneroService {
     private final GeneroRepository generoRepository;
 
-    public List<Genero> getAll(){
+    public List<Genero> getAll() {
         List<Genero> result = generoRepository.findAll();
         return result;
     }
 
-
-    public Genero getById(Long id){
-
+    public Genero getById(Long id) {
         Optional<Genero> result = generoRepository.findById(id);
-        if (result.isPresent()){
+        if (result.isPresent()) {
             return result.get();
-        }else {
+        } else {
             throw new RecursoNaoEncontradoException();
         }
     }
 
-
-    public Genero save(Genero genero){
+    public Genero save(Genero genero) {
+        Genero generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
+        if (generoFromDataBase != null) {
+            throw new RuntimeException("Genero já existe");
+        }
         Genero result = generoRepository.save(genero);
         return result;
     }
 
-    public Genero update(Long id, Genero genero ){
-        getById(id);
-        genero.setId(id);
+    public Genero update(Long id, Genero genero) {
+        Genero generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
+
+        if (generoFromDataBase.getId() != genero.getId()) {
+            throw new RuntimeException("Genero já cadastrado");
+        }
         Genero result = generoRepository.save(genero);
         return result;
     }
 
-
-    public void delete(Long id){
+    public void delete(Long id) {
         getById(id);
         generoRepository.deleteById(id);
     }

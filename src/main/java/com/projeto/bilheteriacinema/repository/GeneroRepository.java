@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GeneroRepository extends JpaRepository<Genero, Long> {
+
+    Genero getGeneroByNome (String nome);
+
 }

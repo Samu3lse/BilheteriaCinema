@@ -32,13 +32,21 @@ public class FilmeService {
 
     public Filme save(Filme filme) {
 
+        Filme filmeFromDatabase = filmeRepository.  getFilmeByTitulo(filme.getTitulo());
+
+        if(filmeFromDatabase != null){
+            throw new RuntimeException("Filme já existe");
+        }
         Filme result = filmeRepository.save(filme);
         return result;
     }
 
     public Filme update(Long id, Filme filme) {
-        getById(id);
-        filme.setId(id);
+        Filme filmeFromDataBase = filmeRepository.getFilmeByTitulo(filme.getTitulo());
+
+        if (filmeFromDataBase.getId() != filme.getId()) {
+            throw new RuntimeException("Filme já cadastrado");
+        }
         Filme result = filmeRepository.save(filme);
         return result;
     }
