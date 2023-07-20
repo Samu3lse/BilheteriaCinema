@@ -29,8 +29,8 @@ public class GeneroService {
     }
 
     public Genero save(Genero genero) {
-        Genero generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
-        if (generoFromDataBase != null) {
+        Optional<Genero> generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
+        if (generoFromDataBase.isPresent()) {
             throw new RuntimeException("Genero já existe");
         }
         Genero result = generoRepository.save(genero);
@@ -38,9 +38,9 @@ public class GeneroService {
     }
 
     public Genero update(Long id, Genero genero) {
-        Genero generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
+        Optional<Genero>generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
 
-        if (generoFromDataBase.getId() != genero.getId()) {
+        if (generoFromDataBase.isPresent() && generoFromDataBase.get().getId()!= genero.getId()) {
             throw new RuntimeException("Genero já cadastrado");
         }
         Genero result = generoRepository.save(genero);

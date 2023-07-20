@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +30,8 @@ public class ProdutoraService {
     }
 
     public Produtora save(Produtora produtora) {
-        Produtora produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
-        if (produtoraFromDataBase != null) {
+        Optional <Produtora> produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
+        if (produtoraFromDataBase.isPresent()) {
             throw new RuntimeException("Produtora já cadastrada");
         }
         Produtora result = produtoraRepository.save(produtora);
@@ -40,8 +39,8 @@ public class ProdutoraService {
     }
 
     public Produtora update(Long id, Produtora produtora) {
-        Produtora produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
-        if (produtoraFromDataBase.getId() != produtora.getId()) {
+        Optional<Produtora>produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
+        if (produtoraFromDataBase.isPresent() && produtoraFromDataBase.get().getId()!= produtora.getId()) {
             throw new RuntimeException("Produtora já cadastrada");
         }
 
