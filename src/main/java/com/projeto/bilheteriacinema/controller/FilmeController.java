@@ -16,7 +16,6 @@ public class FilmeController {
 
     private final FilmeService filmeService;
 
-
     @GetMapping
     public List<Filme> getAll() {
         return filmeService.getAll();
