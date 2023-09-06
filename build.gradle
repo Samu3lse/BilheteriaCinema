@@ -35,7 +35,7 @@ dependencies {
 }
 
 group = 'com.projeto.bilheteriacinema'
-version = '1'
+version = 'v1'
 description = 'BilheteriaCinema'
 java.sourceCompatibility = JavaVersion.VERSION_17
 
