@@ -1,14 +1,15 @@
 package com.projeto.bilheteriacinema.service;
 
+
 import com.projeto.bilheteriacinema.exception.RecursoNaoEncontradoException;
 import com.projeto.bilheteriacinema.model.entity.Filme;
 import com.projeto.bilheteriacinema.repository.FilmeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,19 +24,20 @@ public class FilmeService {
 
     public Filme getById(Long id) {
         Optional<Filme> result = filmeRepository.findById(id);
-        if(result.isPresent()){
+        if (result.isPresent()) {
             return result.get();
-        }else{
-            throw new RecursoNaoEncontradoException();
+        } else {
+            throw new RecursoNaoEncontradoException("Filme não encontrado");
         }
+
     }
 
     public Filme save(Filme filme) {
 
-        Optional<Filme> filmeFromDatabase = filmeRepository.getFilmeByTitulo(filme.getTitulo());
+        Optional<Filme> filmeFromDataBase = filmeRepository.getFilmeByTitulo(filme.getTitulo());
 
-        if(filmeFromDatabase.isPresent()){
-            throw new RuntimeException("Filme já existe");
+        if (filmeFromDataBase.isPresent()) {
+            throw new RecursoNaoEncontradoException();
         }
         Filme result = filmeRepository.save(filme);
         return result;
@@ -47,8 +49,9 @@ public class FilmeService {
         Optional<Filme> filmeFromDataBase = filmeRepository.getFilmeByTitulo(filme.getTitulo());
 
         if (filmeFromDataBase.isPresent() && filmeFromDataBase.get().getId() != filme.getId()) {
-            throw new RuntimeException("Filme já cadastrado");
+            throw new RecursoNaoEncontradoException("Filme já cadastrado");
         }
+
         Filme result = filmeRepository.save(filme);
         return result;
     }
@@ -57,4 +60,5 @@ public class FilmeService {
         getById(id);
         filmeRepository.deleteById(id);
     }
+
 }

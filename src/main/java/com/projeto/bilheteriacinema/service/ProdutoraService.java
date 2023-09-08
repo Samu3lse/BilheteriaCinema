@@ -1,5 +1,7 @@
 package com.projeto.bilheteriacinema.service;
 
+
+import com.projeto.bilheteriacinema.exception.RecursoNaoEncontradoException;
 import com.projeto.bilheteriacinema.model.entity.Produtora;
 import com.projeto.bilheteriacinema.repository.ProdutoraRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,23 +27,25 @@ public class ProdutoraService {
         if (result.isPresent()) {
             return result.get();
         } else {
-            throw new RuntimeException();
+            throw new RecursoNaoEncontradoException("Produtora não encontrada");
         }
     }
 
     public Produtora save(Produtora produtora) {
-        Optional <Produtora> produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
+        Optional<Produtora> produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
         if (produtoraFromDataBase.isPresent()) {
-            throw new RuntimeException("Produtora já cadastrada");
+            throw new RecursoNaoEncontradoException();
         }
         Produtora result = produtoraRepository.save(produtora);
         return result;
     }
 
     public Produtora update(Long id, Produtora produtora) {
-        Optional<Produtora>produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
-        if (produtoraFromDataBase.isPresent() && produtoraFromDataBase.get().getId()!= produtora.getId()) {
-            throw new RuntimeException("Produtora já cadastrada");
+        this.getById(id);
+
+        Optional<Produtora> produtoraFromDataBase = produtoraRepository.getProdutoraByNome(produtora.getNome());
+        if (produtoraFromDataBase.isPresent() && produtoraFromDataBase.get().getId() != produtora.getId()) {
+            throw new RecursoNaoEncontradoException("Produtora já cadastrada");
         }
 
         Produtora result = produtoraRepository.save(produtora);

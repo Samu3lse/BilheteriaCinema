@@ -1,5 +1,6 @@
 package com.projeto.bilheteriacinema.service;
 
+
 import com.projeto.bilheteriacinema.exception.RecursoNaoEncontradoException;
 import com.projeto.bilheteriacinema.model.entity.Genero;
 import com.projeto.bilheteriacinema.repository.GeneroRepository;
@@ -24,24 +25,25 @@ public class GeneroService {
         if (result.isPresent()) {
             return result.get();
         } else {
-            throw new RecursoNaoEncontradoException();
+            throw new RecursoNaoEncontradoException("Gênero não encontrado");
         }
     }
 
     public Genero save(Genero genero) {
-        Optional<Genero> generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
+        Optional<Genero> generoFromDataBase = generoRepository.getGeneroByNome(genero.getNome());
         if (generoFromDataBase.isPresent()) {
-            throw new RuntimeException("Genero já existe");
+            throw new RecursoNaoEncontradoException();
         }
         Genero result = generoRepository.save(genero);
         return result;
     }
 
     public Genero update(Long id, Genero genero) {
-        Optional<Genero>generoFromDataBase = generoRepository.getGeneroByNome(genero.getTipoGenero());
+        this.getById(id);
+        Optional<Genero> generoFromDataBase = generoRepository.getGeneroByNome(genero.getNome());
 
-        if (generoFromDataBase.isPresent() && generoFromDataBase.get().getId()!= genero.getId()) {
-            throw new RuntimeException("Genero já cadastrado");
+        if (generoFromDataBase.isPresent() && generoFromDataBase.get().getId() != genero.getId()) {
+            throw new RecursoNaoEncontradoException("Genero já cadastrado");
         }
         Genero result = generoRepository.save(genero);
         return result;

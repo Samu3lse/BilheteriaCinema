@@ -19,7 +19,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.projectlombok:lombok:1.18.26'
-    implementation 'org.projectlombok:lombok:1.18.26'
     implementation 'com.h2database:h2:2.2.220'
 
 //  Lombok
@@ -40,10 +39,10 @@ description = 'BilheteriaCinema'
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
 }

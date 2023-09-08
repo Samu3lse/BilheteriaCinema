@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -19,6 +19,4 @@ public class Produtora {
     private Long id;
     private String nome;
 
-    @OneToMany
-    List<Filme> filmes;
 }
