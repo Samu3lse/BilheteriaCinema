@@ -5,7 +5,7 @@
       restart: always
       environment:
         POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: bilheteria
+        POSTGRES_DB: BilheteriaCinema
       volumes:
         - postgres-data:/var/lib/postgresql/data
       ports:
